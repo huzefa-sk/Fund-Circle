@@ -45,7 +45,7 @@ export const authOptions = {
         }
         return true;
       } catch(err){
-        console.error("Database error during sign in:", error);
+        console.error("Database error during sign in:", err);
         return false;
       }
     }
