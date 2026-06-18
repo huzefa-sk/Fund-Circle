@@ -18,12 +18,6 @@ export const authOptions = {
   callbacks: {
     async signIn({ user }) {
 
-      const adminemail="shaikhhuzefa3794@gmail.com";
-
-      if(user.email!==adminemail){
-        console.log(`Blocked unauthorized login attempt from: ${user.email}`);
-        return false;
-      }
 
       //storing in DB
 

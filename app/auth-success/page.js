@@ -8,9 +8,10 @@ export default function AuthSuccess() {
       if (window.opener && !window.opener.closed) {
         window.opener.location.href = "/dashboard";
         window.close();
-      } 
+      } else {
+        window.location.replace("/dashboard");
+      }
     } catch (error) {
-      // Fallback for strict Cross-Origin security errors
       window.location.replace("/dashboard");
     }
   }, []);
