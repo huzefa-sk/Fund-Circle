@@ -6,29 +6,27 @@ const Page = () => {
     const { data: session } = useSession()
 
     const handlePopupSignIn = (provider) => {
-        // 1. Open the popup exactly like you did before
         const popup = window.open(
             `/auth-popup/${provider}`,
             "authPopup",
             "width=500,height=600"
         );
 
-        // 2. Create a listener to hear the message from the popup
+        //  to hear the message from the popup
         const messageListener = (event) => {
-            // Security check: Ignore messages from hackers/other domains
+            //  Ignore messages from hackers/other domains
             if (event.origin !== window.location.origin) return;
 
-            // 3. If we hear the exact success message, act on it
+            //  If we hear the exact success message, act on it
             if (event.data === "oauth-login-success") {
-                // Stop listening to prevent memory leaks
                 window.removeEventListener("message", messageListener);
 
-                // Redirect the MAIN window to the dashboard
+                //  to the dashboard
                 window.location.href = "/dashboard";
             }
         };
 
-        // 4. Attach the listener to the main window
+        // Attach the listener to the main window
         window.addEventListener("message", messageListener);
     };
     return (
