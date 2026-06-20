@@ -11,7 +11,7 @@ export default function Home() {
 
       {/* First-Person Description */}
       <p className="text-gray-400 max-w-xl text-lg leading-relaxed">
-        Hi, I'm Shaikh Huzefa Riyaz. I build web applications, embedded systems, and hardware projects. If you find my open-source work or tutorials helpful, consider leaving a tip to fuel the next build!
+        Hi, I'm Huzefa Shaikh. I build web applications, embedded systems, and hardware projects. If you find my open-source work or tutorials helpful, consider leaving a tip to fuel the next build!
       </p>
 
       {/* Action Buttons */}
@@ -34,7 +34,7 @@ export default function Home() {
           <button
             className="border border-white/20 hover:bg-white/10 transition-colors text-gray-300 font-medium px-8 py-3.5 rounded-xl w-full sm:w-auto"
           >
-            View Portfolio
+            My Github
           </button>
         </a>
       </div>
