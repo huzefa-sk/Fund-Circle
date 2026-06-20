@@ -27,7 +27,7 @@ export default function Home() {
 
         {/* Portfolio Link */}
         <a
-          href="https://github.com/your-github-username"
+          href="https://github.com/huzefa-sk"
           target="_blank"
           rel="noopener noreferrer"
         >
