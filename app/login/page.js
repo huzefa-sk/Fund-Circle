@@ -4,33 +4,39 @@ import { useSession, signIn, signOut } from "next-auth/react"
 
 const Page = () => {
     const { data: session } = useSession()
-    
-const handlePopupSignIn = (provider) => {
-  // 1. Open the popup using the dynamic provider string
-  const popup = window.open(
-    `/auth-popup/${provider}`, 
-    "authPopup",
-    "width=500,height=600"
-  );
 
-  // 2. Poll for window closure
-  const timer = setInterval(() => {
-    if (!popup || popup.closed) {
-      clearInterval(timer);
-      
-      // Only reload if the popup was actually closed by the success page
-      // (This avoids unnecessary reloads if the window failed to open)
-      window.location.reload(); 
-    }
-  }, 500);
-};
+    const handlePopupSignIn = (provider) => {
+        // 1. Open the popup exactly like you did before
+        const popup = window.open(
+            `/auth-popup/${provider}`,
+            "authPopup",
+            "width=500,height=600"
+        );
 
+        // 2. Create a listener to hear the message from the popup
+        const messageListener = (event) => {
+            // Security check: Ignore messages from hackers/other domains
+            if (event.origin !== window.location.origin) return;
+
+            // 3. If we hear the exact success message, act on it
+            if (event.data === "oauth-login-success") {
+                // Stop listening to prevent memory leaks
+                window.removeEventListener("message", messageListener);
+
+                // Redirect the MAIN window to the dashboard
+                window.location.href = "/dashboard";
+            }
+        };
+
+        // 4. Attach the listener to the main window
+        window.addEventListener("message", messageListener);
+    };
     return (
         <div className="flex flex-col gap-4 min-h-screen bg-black p-10 items-center mt-[5%]">
 
             {/* Google */}
 
-            <button   onClick={() => handlePopupSignIn("google")}
+            <button onClick={() => handlePopupSignIn("google")}
                 className="flex items-center w-full max-w-xs bg-zinc-900 border border-neutral-800 rounded-xl px-6 py-3 text-sm font-medium text-gray-400 hover:bg-neutral-800 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-neutral-700">
                 <svg className="h-6 w-6 mr-3" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
                     viewBox="-0.5 0 48 48" version="1.1">

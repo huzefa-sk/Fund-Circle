@@ -1,28 +1,24 @@
 "use client";
-
 import { useEffect } from "react";
 
 export default function AuthSuccess() {
   useEffect(() => {
-    console.log("opener:", window.opener);
-
-    try {
-      if (window.opener && !window.opener.closed) {
-        console.log("popup flow");
-        window.opener.location.href = "/dashboard";
-        window.close();
-      } else {
-        console.log("normal flow");
-        window.location.replace("/dashboard");
-      }
-    } catch (error) {
-      console.log(error);
+    // 1. Check if the main window is still listening
+    if (window.opener) {
+      // 2. Broadcast a success message to the main window
+      window.opener.postMessage("oauth-login-success", window.location.origin);
+      
+      // 3. Close the popup
+      window.close();
+    } else {
+      // Fallback just in case they opened this link directly without a popup
       window.location.replace("/dashboard");
     }
   }, []);
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px', color: 'white' }}>
-      <p>Login successful! Redirecting...</p>
+      <p>Login successful! Closing...</p>
     </div>
   );
 }
